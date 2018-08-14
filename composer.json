@@ -1,0 +1,21 @@
+{
+  "name": "lpeng/ljlkt-php-sdk",
+  "description": "lpeng ljlkt sdk",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "l peng",
+      "email": "34756703@qq.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ljlkt\\": "src/Ljlkt"
+    }
+  }
+}
