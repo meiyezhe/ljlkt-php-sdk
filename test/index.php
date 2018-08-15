@@ -8,6 +8,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-Ljlkt\LjlktException\HandleException::init();
+use Ljlkt\LjlktException\HandleException;
 
-throw new Exception('参数错误');
+HandleException::init();
+
+throw new \Exception('参数错误', 10020301);

@@ -16,19 +16,13 @@ class HandleException
     //配置
     public static function init()
     {
-        set_exception_handler('Ljlkt\LjlktException\HandleException::handle');
+        set_exception_handler('Ljlkt\LjlktException\HandleException::ljlktException');
     }
 
     //处理
-    public static function handle($e)
+    public static function ljlktException($e)
     {
         $code = $e->getCode() == 0 ? 500 : $e->getCode();
-        echo R::response($e->getMessage(), $code);
-    }
-
-    //异常
-    public static function excep($msg = '服务器内部错误', $code = 500)
-    {
-        throw new Exception($msg, $code);
+        echo R::response($code, $e->getMessage());
     }
 }
