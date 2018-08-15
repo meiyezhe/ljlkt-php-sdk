@@ -29,7 +29,7 @@ class DuanXinWang implements INotes
     /*
      *初始化配置
      */
-    public function config($config = [])
+    public function initSms($config = [])
     {
         $config = array_filter($config);
         self::$config = array_filter(array_merge(self::$config, $config));
@@ -40,10 +40,12 @@ class DuanXinWang implements INotes
      */
     public function tpl($config = [])
     {
+        //合并参数
+        $config = $this->mergeConfig($config);
         //选择模板
         $config = TextTemplate::check($config);
         //非法校验
-        $config = $this->validateConfig($config);
+        $this->validateConfig($config);
 
         $flag = 0;
         $params = '';
@@ -73,10 +75,18 @@ class DuanXinWang implements INotes
      */
     protected function validateConfig($config)
     {
-        $data = array_filter(array_merge(self::$config, $config));
-        if (empty($data['name']) || empty($data['pwd']) || empty($data['content']) || empty($data['mobile']) || empty($data['sign']) || empty($data['type'])) {
+        if (empty($config['name']) || empty($config['pwd']) || empty($config['content']) || empty($config['mobile']) || empty($config['sign']) || empty($config['type'])) {
             throw new \Exception('参数错误', 100202);
         }
+        return true;
+    }
+
+    /*
+     * 合并参数
+     */
+    protected function mergeConfig($config)
+    {
+        $data = array_filter(array_merge(self::$config, $config));
         return $data;
     }
 }

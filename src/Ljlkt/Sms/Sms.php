@@ -10,7 +10,7 @@ namespace Ljlkt\Sms;
 
 use Ljlkt\Sms\duanxinwang\DuanXinWang;
 
-class F
+class Sms
 {
     public static function run($type)
     {

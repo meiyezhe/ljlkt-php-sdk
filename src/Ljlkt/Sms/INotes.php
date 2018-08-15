@@ -12,7 +12,7 @@ namespace Ljlkt\Sms;
 interface INotes
 {
     //初始化配置
-    public function config();
+    public function initSms();
 
     //发送模板短信
     public function tpl();
