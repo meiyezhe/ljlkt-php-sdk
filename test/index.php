@@ -10,7 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Ljlkt\Exception\HandleException;
 use Ljlkt\Utils\R;
-use Ljlkt\Sms\Pic;
+use Ljlkt\Sms\Sms;
 
 HandleException::init();
 
@@ -24,7 +24,7 @@ function initSms()
         'mobile' => '23423',
         'data' => ['verify' => '2342']
     ];
-    $sms = Pic::run('duanxinwang');
+    $sms = Sms::run('duanxinwang');
     $sms->initSms($c);
     return $sms;
 }

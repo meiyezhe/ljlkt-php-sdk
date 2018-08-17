@@ -13,9 +13,9 @@
 
 namespace Ljlkt\Sms\duanxinwang;
 
-use Ljlkt\Sms\Ini;
+use Ljlkt\Sms\INotes;
 
-class DuanXinWang implements Ini
+class DuanXinWang implements INotes
 {
     //短信配置文件
     private static $config;

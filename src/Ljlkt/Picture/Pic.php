@@ -8,18 +8,18 @@
 
 namespace Ljlkt\Picture;
 
-use Ljlkt\Picture\Verif\Verif;
+use Ljlkt\Picture\Verif;
 
 class Pic
 {
     public static function run($type)
     {
         switch ($type) {
-            case 'duanxinwang':
-                return new DuanXinWang();
+            case 'verif':
+                return new Verif\Verif();
                 break;
             default:
-                throw new \Exception('短信平台不存在', 100201);
+                throw new \Exception('未发现图片生成方法', 100201);
         }
     }
 }

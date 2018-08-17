@@ -12,11 +12,11 @@ namespace Ljlkt\Picture;
 interface Ini
 {
     //初始化配置
-    public function initSms();
+    public function initPic();
 
-    //发送模板短信
-    public function tpl();
+    //生成验证码
+    public function verif();
 
-    //发送语音验证码
-    public function voice();
+    //生成二维码
+    public function qrcode();
 }
