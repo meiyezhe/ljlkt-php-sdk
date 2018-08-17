@@ -8,7 +8,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Ljlkt\LjlktException\HandleException;
+use Ljlkt\Exception\HandleException;
 use Ljlkt\Utils\R;
 use Ljlkt\Sms\Sms;
 
