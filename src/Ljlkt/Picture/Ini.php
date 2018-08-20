@@ -18,5 +18,8 @@ interface Ini
     public function verif();
 
     //生成二维码
-    public function qrcode();
+//    public function qrcode();
+
+    //水印
+//    public function watermark();
 }
