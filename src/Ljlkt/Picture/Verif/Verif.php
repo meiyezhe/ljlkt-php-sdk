@@ -66,8 +66,8 @@ class Verif implements Ini {
 //        imagerectangle($im,0,0,$config['width'],$config['width'],$fecolor);
 
         //4.画干扰点
-        for ($i=0; $i <4 ; $i++) {
-            imageline($im, rand(0,$config['width']/2),0,$config['width'],rand($config['height']/2,$config['height']), $fecolor);
+        for ($i=0; $i <5 ; $i++) {
+            imageline($im, rand(0,$config['width']),rand(0,$config['height']),rand(0,$config['width']),rand(0,$config['height']), $fecolor);
         }
         //5.画噪点
         for($i=0;$i<$config['width']*2;$i++){
@@ -78,7 +78,7 @@ class Verif implements Ini {
 //        $str=substr(str_shuffle('ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'),0,4);
         //imagestring($im,5,10,10,$config['str'],$fontcolor);
 
-        @imagefttext($im, $config['fontsize'] , 0, $config['width']*0.05, $config['height']*0.8, $fontcolor,dirname(__DIR__).'/font/jdxyj.TTF' /*'D:\project\ljlkt\ljlkt-php-sdk\src\Ljlkt\Picture\font\jdxyj.TTF'*/,$config['str']);
+        @imagefttext($im, $config['fontsize'] , 0, $config['width']*0.05, $config['height']*0.8, $fontcolor,dirname(__DIR__).'/font/zz.TTF' /*'D:\project\ljlkt\ljlkt-php-sdk\src\Ljlkt\Picture\font\jdxyj.TTF'*/,$config['str']);
         //7.输出图片
 //        header('content-type:image/png');
 //        imagepng($im);
