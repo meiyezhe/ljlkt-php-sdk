@@ -43,8 +43,11 @@ class Verif implements Ini {
         $im=imagecreatetruecolor($config['width'], $config['height']);
         //2.造颜料
         //1)十六进制转rgb
-        if(!$config['fecolor']){
+        if(empty($config['fecolor'])){
             $config['fecolor'] = $config['color'];
+        }
+        if(empty($config['hotcolor'])){
+            $config['hotcolor'] = $config['color'];
         }
         $col = new Color;
         $font_color = $col->hex2rgb($config['color']);
@@ -75,16 +78,21 @@ class Verif implements Ini {
 //        $str=substr(str_shuffle('ABCDEFGHIJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'),0,4);
         //imagestring($im,5,10,10,$config['str'],$fontcolor);
 
-        @imagefttext($im, $config['fontsize'] , 0, $config['width']*0.05, $config['height']*0.8, $fontcolor, 'D:\project\ljlkt\ljlkt-php-sdk\src\Ljlkt\Picture\font\jdxyj.TTF',$config['str']);
-
+        @imagefttext($im, $config['fontsize'] , 0, $config['width']*0.05, $config['height']*0.8, $fontcolor,dirname(__DIR__).'/font/jdxyj.TTF' /*'D:\project\ljlkt\ljlkt-php-sdk\src\Ljlkt\Picture\font\jdxyj.TTF'*/,$config['str']);
         //7.输出图片
-        header('content-type:image/png');
-        imagepng($im);
-
+//        header('content-type:image/png');
+//        imagepng($im);
+        //下面是图片转base64返回
+        ob_start ();
+        imagepng ($im);
+        $image_data = ob_get_contents ();
+        ob_end_clean ();
+        //得到这个结果，可以直接用于前端的img标签显示
+        $image_data_base64 = "data:image/png;base64,". base64_encode ($image_data);
         //8.销毁画布
         imagedestroy($im);
+        return $image_data_base64;
     }
-
     /*
      * 合并参数
      */
