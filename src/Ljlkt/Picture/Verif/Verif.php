@@ -43,12 +43,6 @@ class Verif implements Ini {
         $im=imagecreatetruecolor($config['width'], $config['height']);
         //2.造颜料
         //1)十六进制转rgb
-        if(empty($config['fecolor'])){
-            $config['fecolor'] = $config['color'];
-        }
-        if(empty($config['hotcolor'])){
-            $config['hotcolor'] = $config['color'];
-        }
         $col = new Color;
         $font_color = $col->hex2rgb($config['color']);
         $fe_color = $col->hex2rgb($config['fecolor']);

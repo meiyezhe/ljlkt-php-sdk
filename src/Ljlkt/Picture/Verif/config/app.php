@@ -9,13 +9,14 @@
 
 //默认配置
 $config = [
-    'width' => '',//画布宽度
-    'height' => '',//画布高度
-    'bgcolor' => '',//背景颜色
-    'color' => '',//字体颜色
-    'fecolor' => '',//干扰点颜色
-    'hotcolor' => '',//噪点颜色
-    'str' => 'pt',//字符串
+    'width' => '65',//画布宽度
+    'height' => '30',//画布高度
+    'bgcolor' => '#EEF7FE',//背景颜色
+    'color' => '#546F50',//字体颜色
+    'fecolor' => '#346FA1',//干扰点颜色
+    'hotcolor' => '#30137D',//噪点颜色
+    'fontsize' => '20',
+    'str' => '',//字符串
 ];
 
 $conf = array_filter($config);
