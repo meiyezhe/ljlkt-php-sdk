@@ -17,11 +17,11 @@ HandleException::init();
 function initSms()
 {
     $c = [
-        'name'=>'name',
-        'pwd'=>'pwd',
-        'sign'=>'sign',
+        'name'=>'13730692976',
+        'pwd'=>'7696501E54AC6DA25DC91E6469BE',
+        'sign'=>'【五弄云教育】',
         'tpl' => 'tpl1',
-        'mobile' => '23423',
+        'mobile' => '',
         'data' => ['verify' => '2342']
     ];
     $sms = Sms::run('duanxinwang');
@@ -31,7 +31,7 @@ function initSms()
 
 $config = [
     'tpl' => 'tpl1',
-    'mobile' => '23423',
+    'mobile' => '13540725366',
     'data' => ['verify' => '2342'],
 ];
 $sms = initSms();
