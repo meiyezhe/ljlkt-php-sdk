@@ -7,8 +7,7 @@
  */
 
 namespace Ljlkt\Picture;
-
-use Ljlkt\Picture\Verif;
+use Ljlkt\Picture\Verif\Verif;
 
 class Pic
 {
@@ -16,7 +15,7 @@ class Pic
     {
         switch ($type) {
             case 'verif':
-                return new Verif\Verif();
+                return new Verif;
                 break;
             default:
                 throw new \Exception('未发现图片生成方法', 100201);
