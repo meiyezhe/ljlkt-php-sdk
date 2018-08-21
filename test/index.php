@@ -31,7 +31,7 @@ function initSms()
 
 $config = [
     'tpl' => 'tpl1',
-    'mobile' => '13540725366',
+    'mobile' => '1354076',
     'data' => ['verify' => '2342'],
 ];
 $sms = initSms();

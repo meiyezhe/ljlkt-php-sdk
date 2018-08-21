@@ -10,6 +10,7 @@
 
 namespace Ljlkt\Utils;
 
+
 class R
 {
     const CODE = 0;

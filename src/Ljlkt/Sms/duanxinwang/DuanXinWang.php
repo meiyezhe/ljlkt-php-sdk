@@ -13,10 +13,10 @@
 
 namespace Ljlkt\Sms\duanxinwang;
 
-use Ljlkt\Sms\INotes;
-use Ljlkt\Utils\R;
+use Ljlkt\Sms\ISms;
+use Ljlkt\Utils\Curl;
 
-class DuanXinWang implements INotes
+class DuanXinWang implements ISms
 {
     const HOST = 'http://web.duanxinwang.cc/asmx/smsservice.aspx';
 
@@ -50,10 +50,8 @@ class DuanXinWang implements INotes
         //非法校验
         $this->validateConfig($config);
 
-        $response = $this->curl($config);
+        $response = (new Curl())->send(self::HOST, $config, 'post');
 
-        $data = explode("\r\n", $response);
-        $response = $data[count($data) - 1];
         $response = explode(",", $response);
         if ($response[0] != 0) {
             throw new \Exception($response[1]);
@@ -86,27 +84,6 @@ class DuanXinWang implements INotes
     protected function mergeConfig($config)
     {
         $data = array_filter(array_merge(self::$config, $config));
-        return $data;
-    }
-
-    private function curl($postData = [])
-    {
-        $curl = curl_init();
-        //设置抓取的url
-        curl_setopt($curl, CURLOPT_URL, self::HOST);
-        //设置头文件的信息作为数据流输出
-        curl_setopt($curl, CURLOPT_HEADER, 1);
-        //设置获取的信息以文件流的形式返回，而不是直接输出。
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        //设置post方式提交
-        curl_setopt($curl, CURLOPT_POST, 1);
-        //设置post数据
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
-        //执行命令
-        $data = curl_exec($curl);
-        //关闭URL请求
-        curl_close($curl);
-        //显示获得的数据
         return $data;
     }
 }

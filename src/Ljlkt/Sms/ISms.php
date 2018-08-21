@@ -9,7 +9,7 @@
 
 namespace Ljlkt\Sms;
 
-interface INotes
+interface ISms
 {
     //初始化配置
     public function initSms();

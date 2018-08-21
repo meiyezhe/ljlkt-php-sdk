@@ -10,60 +10,38 @@
 namespace Ljlkt\Crypt;
 
 
-class RSA
+class Rsa
 {
-    private $pubKey = '-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDBwrycIEl9dzF2FmHFHOYdGuIW
-fFb9TG80cerkoEQwgp3Zi7INuBAu9C6UQyRsuW0CxBv/kiJRO87bJdgNjIknA43K
-/FSB67A1nH/YqTj1zojfOuhT9+cTONSAiD48o5CTIjgD1CeYCKU5hJ91YprfHm0e
-GEcKohhgSjk3aT4+rwIDAQAB
------END PUBLIC KEY-----';
-    private $priKey = '-----BEGIN ENCRYPTED PRIVATE KEY-----
-MIICxjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQI93mCqiHHVRkCAggA
-MBQGCCqGSIb3DQMHBAiVlNTMsj57JgSCAoDu4gfOtn4gUYwmIs2vCHMLlsDlX1wN
-K019J4fxaTozxesbTT6d4c+Ju/JvJPgFi9IXtoJVHRjJXEtDfFJaFmYro+gC9Wts
-VwVdHiP35/tPQQ9nIV4uhkSOIHTT7KW/1DFdfezXQs6fhV6+cAhYlQqQ7kFWRWEV
-+P1/X+rQfYoTFcoph96VUie96BkmGUPLBNvXWDNgsHP4Ny2owEr2TlSoi+WWBttR
-HgSLcYOn1omuCUbtZzES/VfGYP6NbLInNsQ3OYaJvUiM60cPuAwGeBtt7W7z/YwC
-KnqyF4hVJz1ddhYJgfsnOi3x7EUHPDRlr+2vV6asp+mD38J/JV0vt7WwohZlKPn1
-1HcRlK4MyYKiQ6vh3Z2R4nlq/BwGShrWQiq7yT8/U66iLRdOK+9TcS5BhrrV/x1y
-x9bMAyW9Xf6YAkrqSeJ4i60wiuzeciKHPc7WaK1pg0K7Yu7W3SqAxC8Y7dWCHDwq
-jP1qvRQrC+bA3p2IWu7YHIVe2DKwuLxbj1ki+J753GgSwQN7klflZi2O3SXLrB9g
-NALdsZhutBSIY5dBXOncG2n2QnB5lPU+31XXP+HC0bdh+CzjBjj7Nu3uSeJLCBWZ
-7AQPbJni5UlvHC2MWdHQCvba4EFyHqH3VXmQROZpFM4Sbx4rK5MVuX9erE67SQgs
-qLhcA/+rwwg85xIfa3DAn/ahYRF9PLK+kZaErJm+wahT6lxHo7VsW0QJfhYUW1sI
-LBCttvUrKioRqfML8l7aXtVPrc166PYoXHthEqleIOD613zyTZquMYm+PJXcGc4d
-asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
------END ENCRYPTED PRIVATE KEY-----
-';
+    private $pubKey = '';
+    private $priKey = '';
 
-    /**
+    /*
      * 构造函数
      *
      * @param string 公钥文件（验签和加密时传入）
      * @param string 私钥文件（签名和解密时传入）
      */
-    public function __construct($public_key_file = __DIR__ . '/rsa/id_rsa.pub', $private_key_file = __DIR__ . '/rsa/id_rsa')
+    public function __construct($public_key_content = false, $private_key_content = false)
     {
-        if ($public_key_file) {
-//            $this->_getPublicKey($public_key_file);
+        if ($public_key_content) {
+            $this->pubKey = openssl_get_publickey($key_content);
         }
-        if ($private_key_file) {
-//            $this->_getPrivateKey($private_key_file);
+        if ($private_key_content) {
+            $this->priKey = openssl_get_privatekey($private_key_content);
         }
     }
 
     // 私有方法
 
-    /**
+    /*
      * 自定义错误处理
      */
     private function _error($msg)
     {
-        die('RSA Error:' . $msg); //TODO
+        throw new \Exception($msg);
     }
 
-    /**
+    /*
      * 检测填充类型
      * 加密只支持PKCS1_PADDING
      * 解密支持PKCS1_PADDING和NO_PADDING
@@ -125,42 +103,13 @@ asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
         return $data;
     }
 
-    private function _getPublicKey($file)
-    {
-        $key_content = $this->_readFile($file);
-        if ($key_content) {
-//            $this->pubKey = $key_content;
-            $this->pubKey = openssl_get_publickey($key_content);
-        }
-    }
-
-    private function _getPrivateKey($file)
-    {
-        $key_content = $this->_readFile($file);
-        if ($key_content) {
-//            $this->priKey = $key_content;
-            $this->priKey = openssl_get_privatekey($key_content);
-        }
-    }
-
-    private function _readFile($file)
-    {
-        $ret = false;
-        if (!file_exists($file)) {
-            $this->_error("The file {$file} is not exists");
-        } else {
-            $ret = file_get_contents($file);
-        }
-        return $ret;
-    }
-
     private function _hex2bin($hex = false)
     {
         $ret = $hex !== false && preg_match('/^[0-9a-fA-F]+$/i', $hex) ? pack("H*", $hex) : false;
         return $ret;
     }
 
-    /**
+    /*
      * 生成签名
      *
      * @param string 签名材料
@@ -176,7 +125,7 @@ asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
         return $ret;
     }
 
-    /**
+    /*
      * 验证签名
      *
      * @param string 签名材料
@@ -202,7 +151,7 @@ asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
         return $ret;
     }
 
-    /**
+    /*
      * 加密
      *
      * @param string 明文
@@ -212,20 +161,20 @@ asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
      */
     public function encrypt($data, $code = 'base64', $padding = OPENSSL_PKCS1_PADDING)
     {
-        openssl_public_encrypt($data, $resultEn, $this->pubKey, $padding);
-        openssl_private_decrypt($resultEn, $resultDe, $this->priKey, $padding);
-        print_r($resultEn);
-        print_r($resultDe);
-        die;
+        if (!$this->_checkPadding($padding, 'en')) {
+            $this->_error('padding error');
+        }
+        if(is_array($data) || is_object($data)){
+            $data = json_encode($data);
+        }
         $ret = false;
-        if (!$this->_checkPadding($padding, 'en')) $this->_error('padding error');
         if (openssl_public_encrypt($data, $result, $this->pubKey, $padding)) {
             $ret = $this->_encode($result, $code);
         }
         return $ret;
     }
 
-    /**
+    /*
      * 解密
      *
      * @param string 密文
@@ -244,6 +193,6 @@ asmbpr6AtyZGd/iOW+zpQ1dE2ObpI6/BTN+q3M22l0zBo9m0X7OS0s9w
                 $ret = $rev ? rtrim(strrev($result), "\0") : '' . $result;
             }
         }
-        return $ret;
+        return json_decode($ret);
     }
 }
