@@ -19,9 +19,9 @@ $options = [
 ];
 $redis = new Redis($options);
 
-$appId = 2;
-$pri_key_name = 'ljlkt:rsa:prikey:' . $appId;
-$pub_key_name = 'ljlkt:rsa:pubkey:' . $appId;
+$appId = 1;
+$pri_key_name = 'ljlkt:sdk:rsa:prikey:' . $appId;
+$pub_key_name = 'ljlkt:sdk:rsa:pubkey:' . $appId;
 
 $pri_key_content = '-----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQDZeUXkIq0uNCDLYppk9DxsEZ0RLTmgn6iWOx16+FMux1+5BZYK

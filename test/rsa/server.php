@@ -9,17 +9,32 @@
 require __DIR__ . '/../../vendor/autoload.php';
 
 use Ljlkt\Exception\HandleException;
-use Ljlkt\Auth\Rsa;
+use Ljlkt\Auth\Auth;
 use Ljlkt\Utils\Request;
 
 HandleException::init();
 
-$params = $_POST;
-
-$rsa = new Rsa();
-print_r((new Request())->header());
-print_r($_SERVER);
-print_r($params);die;
-$data = $rsa->Validate($params);
-print_r($data);
-die;
+$config = [
+    'redis' => [
+        'host' => '118.123.18.164',
+        'port' => 8479
+    ]
+];
+$params = [
+    'token' => 'sdfdsf',
+    'appId' => 0,
+    'data' => [
+    ]
+];
+$request = new Request();
+$postHeader = $request->header();
+$postData = $request->post();
+//print_r($postHeader);
+//print_r($postData);
+$obj = new Auth($postHeader, $postData, $config);
+$data = $obj->validate();
+echo json_encode([
+    'code' => 0,
+    'token' => 'sdfdsfsdfdsfsdf',
+    'msg' => 'success',
+    'data' => $data]);

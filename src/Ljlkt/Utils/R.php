@@ -25,13 +25,9 @@ class R
         ]);
     }
 
-    public static function response($code = 500, $msg = "", $data = [])
+    public static function response($data = [])
     {
-        return self::encodeParams([
-            'code' => $code,
-            'msg' => $msg,
-            'data' => $data
-        ]);
+        return self::encodeParams($data);
     }
 
     private static function encodeParams($data = [])

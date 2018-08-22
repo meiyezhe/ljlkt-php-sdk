@@ -2,18 +2,31 @@
 /**
  * Created by PhpStorm.
  * User: lpeng
- * Date: 2018/8/14
- * Time: 15:42
+ * Date: 2018/8/21
+ * Time: 11:31
  */
 
-require __DIR__ . '/../../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 use Ljlkt\Exception\HandleException;
+use Ljlkt\Utils\R;
+use Ljlkt\Auth\Auth;
 use Ljlkt\Crypt\Rsa;
-use Ljlkt\Utils\Curl;
 
 HandleException::init();
 
+$config = [
+    'redis' => [
+        'host' => '118.123.18.164',
+        'port' => 8479
+    ]
+];
+$params = [
+    'token' => 'sdfdsf',
+    'appId' => 0,
+    'data' => [
+    ]
+];
 $priKey = '
 -----BEGIN RSA PRIVATE KEY-----
 MIICXAIBAAKBgQDZeUXkIq0uNCDLYppk9DxsEZ0RLTmgn6iWOx16+FMux1+5BZYK
@@ -39,17 +52,11 @@ wIntXQM06TMscShGJwIDAQAB
 -----END PUBLIC KEY-----';
 
 $rsa = new Rsa($pubKey, $priKey);
-$data = [
-    'username' => 'n',
-    'password' => 'p'
-];
-$params = $rsa->encrypt($data);
-//post请求
-$curl = new Curl();
-$rep = $curl->setHeader([
-    'token: ',
-    'appid: 0'
-])->send('http://sdk.ljlsp.com/rsa/server', ['data' => $params], 'post');
-
-print_r(json_decode($rep));
+$params['data'] = $rsa->encrypt($params['data']);
+$obj = new Auth($params, $config);
+print_r($obj->validate());
+$sign = $rsa->sign(json_encode($params['data']));
+$verify = $rsa->verify(json_encode($params['data']), $sign);
+print_r($sign);
+print_r($verify);
 die;

@@ -24,7 +24,7 @@ class Rsa
     public function __construct($public_key_content = false, $private_key_content = false)
     {
         if ($public_key_content) {
-            $this->pubKey = openssl_get_publickey($key_content);
+            $this->pubKey = openssl_get_publickey($public_key_content);
         }
         if ($private_key_content) {
             $this->priKey = openssl_get_privatekey($private_key_content);
@@ -164,7 +164,7 @@ class Rsa
         if (!$this->_checkPadding($padding, 'en')) {
             $this->_error('padding error');
         }
-        if(is_array($data) || is_object($data)){
+        if (is_array($data) || is_object($data)) {
             $data = json_encode($data);
         }
         $ret = false;
@@ -185,6 +185,9 @@ class Rsa
      */
     public function decrypt($data, $code = 'base64', $padding = OPENSSL_PKCS1_PADDING, $rev = false)
     {
+        if (!is_string($data)) {
+            return false;
+        }
         $ret = false;
         $data = $this->_decode($data, $code);
         if (!$this->_checkPadding($padding, 'de')) $this->_error('padding error');

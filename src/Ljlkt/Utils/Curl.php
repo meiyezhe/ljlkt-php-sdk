@@ -41,6 +41,12 @@ class Curl
         return self::$func(self::$url);
     }
 
+    public function setHeader($config = [])
+    {
+        self::$header = array_merge(self::$header, $config);
+        return $this;
+    }
+
     /*
      * 基础发起curl请求函数
      * @param int $method ['get','post','put']
@@ -73,7 +79,7 @@ class Curl
         }
 
         $data = curl_exec($ch);//运行curl
-        if(!$data){
+        if (!$data) {
             curl_close($ch);
             throw new \Exception('Curl: Request is bad');
         }
