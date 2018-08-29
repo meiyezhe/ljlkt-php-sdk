@@ -14,12 +14,12 @@ use Ljlkt\Cache\Redis;
 HandleException::init();
 
 $options = [
-    'host' => '118.123.18.164',
-    'port' => 8479
+    'host' => '192.168.0.201',
+    'port' => 6379
 ];
 $redis = new Redis($options);
 
-$appId = 1;
+$appId = '115101114';
 $pri_key_name = 'ljlkt:sdk:rsa:prikey:' . $appId;
 $pub_key_name = 'ljlkt:sdk:rsa:pubkey:' . $appId;
 

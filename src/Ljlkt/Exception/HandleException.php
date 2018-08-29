@@ -23,6 +23,7 @@ class HandleException
     public static function httpException($e)
     {
         $code = $e->getCode() == 0 ? 500 : $e->getCode();
-        echo R::response($code, $e->getMessage());
+        $data = ['code' => $code, 'msg' => $e->getMessage()];
+        echo R::response($data);
     }
 }
